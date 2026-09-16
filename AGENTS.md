@@ -58,7 +58,8 @@ pnpm --dir portal check
 ```
 
 That is lint → typecheck → build → test, and it is the gate. `pnpm --dir portal test` alone reads the built output in
-`portal/dist/`, so run the build first or run `pnpm --dir portal check`.
+`portal/dist/`, and builds it first itself, so it is safe to run alone. The shared gate runs `test` before `build`,
+which is why the build lives inside the test script rather than being left to the caller.
 
 Use the Browser pane's preview tools to run the dev server, never a bare `pnpm --dir portal dev` in a shell. The portal
 is served at its mount, not at the origin root: `http://localhost:5173/app/projects/sample-estate/portal/`.
