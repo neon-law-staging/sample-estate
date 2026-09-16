@@ -2,7 +2,7 @@
 
 Pulled 2026-08-20. Eleven Washington cases in which the decedent **died intestate**: the estate was divided by the
 descent statute because there was no instrument to divide it otherwise. The portal renders this list under its
-*Research* tab ([`src/research.ts`](../src/research.ts) is the index it reads); this folder is the full text.
+*Research* tab ([`src/research.ts`](../research.ts) is the index it reads); this folder is the full text.
 
 Read the `.md` files. The `.json` files are the source they are generated from.
 

@@ -12,7 +12,7 @@
  * Washington estate that went that way, and read together they are the argument
  * for signing something.
  *
- * The full opinions live in `research/opinions/` as text, pulled from the
+ * The full opinions live in `src/research/opinions/` as text, pulled from the
  * Caselaw Access Project. This module is the index the portal renders; the
  * folder is the corpus. Neither is a citator — no treatment has been verified.
  *
@@ -28,7 +28,7 @@ export interface Authority {
   citation: string
   year: number
   court: 'Supreme Court' | 'Court of Appeals'
-  /** File under `research/opinions/`, without the extension. */
+  /** File under `src/research/opinions/`, without the extension. */
   file: string
   /** What this case is in the folder for. */
   holding: string
@@ -160,4 +160,4 @@ export const AUTHORITIES: Authority[] = [
 export const NEAREST_AUTHORITY = 'fields'
 
 /** Where the full text sits, for the note under the table. */
-export const RESEARCH_FOLDER = 'research/opinions/'
+export const RESEARCH_FOLDER = 'src/research/opinions/'
