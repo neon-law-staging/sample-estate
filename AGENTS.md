@@ -3,7 +3,7 @@
 This is one Project's repository. It holds two kinds of source and nothing else.
 
 - `templates/` — notation blueprints, one `templates/<code>.md` per notation.
-- `apps/<app>/` — React + Vite applications, each discovered from its direct `package.json`.
+- `apps/<app>/` — React + Vite applications, each discovered from its direct `portal/package.json`.
 
 Filename stems use the Project code (hyphens become `_`) then `__name`; `code:` matches.
 
@@ -48,52 +48,52 @@ sync-skills` — is the scope rule to read before reaching outside this tree.
 A Navigator **project application**: the client portal for the fixture matter *Estate of Cornelius Montgomery*. Vite,
 React 19, and [Navigator UX](https://github.com/neon-law-source-code/navigator-ux) for every component and every color.
 
-**All of it is fixture data.** Nobody named in `src/matter.ts` exists. Real client material must never be added here —
-see `README.md`.
+**All of it is fixture data.** Nobody named in `portal/src/matter.ts` exists. Real client material must never be added
+here — see `README.md`.
 
 ## Commands
 
 ```bash
-pnpm check
+pnpm --dir portal check
 ```
 
-That is lint → typecheck → build → test, and it is the gate. `pnpm test` alone reads the built output in `dist/`, so run
-the build first or run `pnpm check`.
+That is lint → typecheck → build → test, and it is the gate. `pnpm --dir portal test` alone reads the built output in
+`portal/dist/`, so run the build first or run `pnpm --dir portal check`.
 
-Use the Browser pane's preview tools to run the dev server, never a bare `pnpm dev` in a shell. The portal is served at
-its mount, not at the origin root: `http://localhost:5173/app/projects/sample-estate/portal/`.
+Use the Browser pane's preview tools to run the dev server, never a bare `pnpm --dir portal dev` in a shell. The portal
+is served at its mount, not at the origin root: `http://localhost:5173/app/projects/sample-estate/portal/`.
 
 ## The three things that break silently
 
-1. **The mount.** `MOUNT` in `vite.config.ts` is the single most load-bearing line here. A bundle built with the wrong
-   base 404s on every asset, and only once published.
-2. **In-bundle links.** Every link inside this bundle goes through `portalPath()` in `src/mount.ts`. A hardcoded path
-   fails only when somebody clicks it. Links to Navigator's own routes (`/app/projects`) stay absolute.
-3. **The ready hook.** `src/ready.tsx` renders `id="sample-estate-portal-ready"`, which Navigator's walkthrough waits
-   for. It must be rendered by React, never written into `index.html`.
+1. **The mount.** `MOUNT` in `portal/vite.config.ts` is the single most load-bearing line here. A bundle built with the
+   wrong base 404s on every asset, and only once published.
+2. **In-bundle links.** Every link inside this bundle goes through `portalPath()` in `portal/src/mount.ts`. A hardcoded
+   path fails only when somebody clicks it. Links to Navigator's own routes (`/app/projects`) stay absolute.
+3. **The ready hook.** `portal/src/ready.tsx` renders `id="sample-estate-portal-ready"`, which Navigator's walkthrough
+   waits for. It must be rendered by React, never written into `portal/index.html`.
 
 ## Styling
 
 Navigator UX ships the tokens, the typeface, and every component rule. Compose its components; do not reach for a
-literal color. When something genuinely local is needed, add it to `src/index.css` reading `--nav-*` tokens, and say in
-a comment why the library did not cover it.
+literal color. When something genuinely local is needed, add it to `portal/src/index.css` reading `--nav-*` tokens, and
+say in a comment why the library did not cover it.
 
 ## The research folder
 
-`src/research/opinions/` holds the full text of the Washington intestacy cases the portal shows under its *Research*
-tab. The `.json` files come from the Caselaw Access Project and the `.md` files are generated from them:
+`portal/src/research/opinions/` holds the full text of the Washington intestacy cases the portal shows under its
+*Research* tab. The `.json` files come from the Caselaw Access Project and the `.md` files are generated from them:
 
 ```bash
-python3 src/research/convert.py
+python3 portal/src/research/convert.py
 ```
 
-Nothing in `src/research/opinions/` is edited by hand. `src/research.ts` is the index the portal renders;
-`src/research/README.md` records where the text came from and what has not been verified.
+Nothing in `portal/src/research/opinions/` is edited by hand. `portal/src/research.ts` is the index the portal renders;
+`portal/src/research/README.md` records where the text came from and what has not been verified.
 
 ## Notation lint
 
-`pnpm check` covers the TypeScript. The Markdown and the YAML answer to the Neon Law Navigator rule set instead, and the
-only thing that reads them is the Navigator CLI:
+`pnpm --dir portal check` covers the TypeScript. The Markdown and the YAML answer to the Neon Law Navigator rule set
+instead, and the only thing that reads them is the Navigator CLI:
 
 ```bash
 brew install neon-law-source-code/navigator/navigator   # macOS, and tap-qualified on purpose
@@ -111,8 +111,8 @@ branch red overnight. `notation` is one of the three jobs the required `ci` chec
 merge — and the pinned version is worth keeping in step with the formula above, since the two together are what "it
 passed on my machine" means here.
 
-`pnpm validate` is deliberately not part of `pnpm check`: `check` needs only what `pnpm install` brings, so a
-contributor who has not installed the CLI is not blocked by it. Run both before pushing.
+`pnpm validate` is deliberately not part of `pnpm --dir portal check`: `check` needs only what `pnpm --dir portal
+install` brings, so a contributor who has not installed the CLI is not blocked by it. Run both before pushing.
 
 `validate` takes no file list, and there is no list to keep current. It walks the tree itself and finds every Markdown,
 event, and YAML file under it, so a document is covered the moment it exists rather than the moment somebody remembers
@@ -145,12 +145,12 @@ Four things about writing prose that passes, none of them obvious from the messa
 - **Italics inside a list item bulleted with an asterisk report M037.** The bullet's own asterisk is counted as an
   inline marker. A dash bullet has no such problem, and M004 holds a file to whichever character its first bullet used.
 
-`src/research/opinions/` is generated, and it stays clean by construction rather than by hand. `src/research/convert.py`
-fills court paragraphs to 120 columns and escapes what wrapping turns into accidental Markdown — the `*5` of a LEXIS
-citation, a statute number like `11.04.015` that lands at the start of a line, a bare URL in a footnote.
-`src/markdown.tsx` undoes exactly those two things when it renders, and `src/test/markdown.test.tsx` pins the pair. So a
-finding in that folder is a bug in the converter, never a file to edit: change `convert.py`, re-run it, and validate
-again.
+`portal/src/research/opinions/` is generated, and it stays clean by construction rather than by hand.
+`portal/src/research/convert.py` fills court paragraphs to 120 columns and escapes what wrapping turns into accidental
+Markdown — the `*5` of a LEXIS citation, a statute number like `11.04.015` that lands at the start of a line, a bare URL
+in a footnote. `portal/src/markdown.tsx` undoes exactly those two things when it renders, and
+`portal/src/test/markdown.test.tsx` pins the pair. So a finding in that folder is a bug in the converter, never a file
+to edit: change `convert.py`, re-run it, and validate again.
 
 ## Merging
 
@@ -183,10 +183,10 @@ licence notice, which is the one edit here that would actually be wrong.
 
 **`http://www.courts.wa.gov/`** — URL inside quoted judicial text — an autolink in a quotation
 
-Inside the quoted text of `In re Estate of Borghi`, bundled from `src/research/opinions/`. The court wrote this footnote
-— "available at <http://…> (last visited Oct. 29, 2009)" — and the Markdown renderer turns the angle-bracket form into
-an anchor, which is why it reaches the bundle as a link rather than as prose. Editing a URL out of a quoted opinion
-would alter the quotation, and an accurate quote is not negotiable here.
+Inside the quoted text of `In re Estate of Borghi`, bundled from `portal/src/research/opinions/`. The court wrote this
+footnote — "available at <http://…> (last visited Oct. 29, 2009)" — and the Markdown renderer turns the angle-bracket
+form into an anchor, which is why it reaches the bundle as a link rather than as prose. Editing a URL out of a quoted
+opinion would alter the quotation, and an accurate quote is not negotiable here.
 
-This entry does not generalise: every opinion added under `src/research/` may carry its own footnote URLs, and answering
-each with a new allowlist line scales badly and dulls the gate. Filed separately.
+This entry does not generalise: every opinion added under `portal/src/research/` may carry its own footnote URLs, and
+answering each with a new allowlist line scales badly and dulls the gate. Filed separately.

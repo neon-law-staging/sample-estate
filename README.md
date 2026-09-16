@@ -42,9 +42,9 @@ never redirects to a signed URL, because a signed URL is bearer-shareable and wo
 That has three consequences for this app:
 
 1. **Vite `base` is baked at build time** and must be `/app/projects/sample-estate/portal/`. A bundle built with the
-   wrong base 404s on every asset. It is one named constant at the top of `vite.config.ts`.
-2. **Never hardcode a mount-absolute link.** Write links relative to the base, or derive them — `src/mount.ts` is the
-   whole of that job, and `portalPath()` is what every in-bundle link goes through. Hardcoded `/sample-estate/...`
+   wrong base 404s on every asset. It is one named constant at the top of `portal/vite.config.ts`.
+2. **Never hardcode a mount-absolute link.** Write links relative to the base, or derive them — `portal/src/mount.ts` is
+   the whole of that job, and `portalPath()` is what every in-bundle link goes through. Hardcoded `/sample-estate/...`
    strings are the single most common way one of these bundles breaks under its real mount, and they break silently,
    because the link only fails when somebody clicks it. Links to Navigator's *own* routes (`/app/projects`) stay
    absolute.
@@ -57,10 +57,11 @@ The serve CSP is:
 default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'
 ```
 
-Nothing in this bundle is inline or off-origin, which is why it needs no exception — and `src/test/bundle.test.ts`
-asserts that against the built output rather than trusting it. In particular there is no CDN tag for a stylesheet or a
-webfont: Navigator UX's stylesheet and its two self-hosted woff2 files are compiled into hashed assets under this
-matter's own mount, because a CDN tag works on the dev server and is blocked in production.
+Nothing in this bundle is inline or off-origin, which is why it needs no exception — and
+`portal/src/test/bundle.test.ts` asserts that against the built output rather than trusting it. In particular there is
+no CDN tag for a stylesheet or a webfont: Navigator UX's stylesheet and its two self-hosted woff2 files are compiled
+into hashed assets under this matter's own mount, because a CDN tag works on the dev server and is blocked in
+production.
 
 ## The one contract Navigator depends on
 
@@ -70,9 +71,9 @@ The bundle must show that it actually mounted, through an element carrying:
 id="sample-estate-portal-ready"
 ```
 
-Navigator's browser walkthrough waits for it. It is rendered by React (`src/ready.tsx`), never written into `index.html`
-— a static marker would report "ready" for a bundle that threw on mount, which is the exact failure the signal exists to
-catch.
+Navigator's browser walkthrough waits for it. It is rendered by React (`portal/src/ready.tsx`), never written into
+`portal/index.html` — a static marker would report "ready" for a bundle that threw on mount, which is the exact failure
+the signal exists to catch.
 
 ## Which Project this bundle belongs to
 
@@ -89,9 +90,9 @@ wrong code would put this matter's application on another matter's portal.
 ## Developing
 
 ```bash
-pnpm install --frozen-lockfile
-pnpm dev                          # the Vite dev server
-pnpm check                        # lint, typecheck, build, test — what CI runs
+pnpm --dir portal install --frozen-lockfile
+pnpm --dir portal dev                          # the Vite dev server
+pnpm --dir portal check                        # lint, typecheck, build, test — what CI runs
 ```
 
 To build it the way Navigator does, from a Navigator checkout:
