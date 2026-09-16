@@ -80,15 +80,15 @@ a comment why the library did not cover it.
 
 ## The research folder
 
-`research/opinions/` holds the full text of the Washington intestacy cases the portal shows under its *Research* tab.
-The `.json` files come from the Caselaw Access Project and the `.md` files are generated from them:
+`src/research/opinions/` holds the full text of the Washington intestacy cases the portal shows under its *Research*
+tab. The `.json` files come from the Caselaw Access Project and the `.md` files are generated from them:
 
 ```bash
-python3 research/convert.py
+python3 src/research/convert.py
 ```
 
-Nothing in `research/opinions/` is edited by hand. `src/research.ts` is the index the portal renders;
-`research/README.md` records where the text came from and what has not been verified.
+Nothing in `src/research/opinions/` is edited by hand. `src/research.ts` is the index the portal renders;
+`src/research/README.md` records where the text came from and what has not been verified.
 
 ## Notation lint
 
@@ -145,11 +145,12 @@ Four things about writing prose that passes, none of them obvious from the messa
 - **Italics inside a list item bulleted with an asterisk report M037.** The bullet's own asterisk is counted as an
   inline marker. A dash bullet has no such problem, and M004 holds a file to whichever character its first bullet used.
 
-`research/opinions/` is generated, and it stays clean by construction rather than by hand. `research/convert.py` fills
-court paragraphs to 120 columns and escapes what wrapping turns into accidental Markdown — the `*5` of a LEXIS citation,
-a statute number like `11.04.015` that lands at the start of a line, a bare URL in a footnote. `src/markdown.tsx` undoes
-exactly those two things when it renders, and `src/test/markdown.test.tsx` pins the pair. So a finding in that folder is
-a bug in the converter, never a file to edit: change `convert.py`, re-run it, and validate again.
+`src/research/opinions/` is generated, and it stays clean by construction rather than by hand. `src/research/convert.py`
+fills court paragraphs to 120 columns and escapes what wrapping turns into accidental Markdown — the `*5` of a LEXIS
+citation, a statute number like `11.04.015` that lands at the start of a line, a bare URL in a footnote.
+`src/markdown.tsx` undoes exactly those two things when it renders, and `src/test/markdown.test.tsx` pins the pair. So a
+finding in that folder is a bug in the converter, never a file to edit: change `convert.py`, re-run it, and validate
+again.
 
 ## Merging
 
@@ -182,10 +183,10 @@ licence notice, which is the one edit here that would actually be wrong.
 
 **`http://www.courts.wa.gov/`** — URL inside quoted judicial text — an autolink in a quotation
 
-Inside the quoted text of `In re Estate of Borghi`, bundled from `research/opinions/`. The court wrote this footnote —
-"available at <http://…> (last visited Oct. 29, 2009)" — and the Markdown renderer turns the angle-bracket form into an
-anchor, which is why it reaches the bundle as a link rather than as prose. Editing a URL out of a quoted opinion would
-alter the quotation, and an accurate quote is not negotiable here.
+Inside the quoted text of `In re Estate of Borghi`, bundled from `src/research/opinions/`. The court wrote this footnote
+— "available at <http://…> (last visited Oct. 29, 2009)" — and the Markdown renderer turns the angle-bracket form into
+an anchor, which is why it reaches the bundle as a link rather than as prose. Editing a URL out of a quoted opinion
+would alter the quotation, and an accurate quote is not negotiable here.
 
-This entry does not generalise: every opinion added under `research/` may carry its own footnote URLs, and answering
+This entry does not generalise: every opinion added under `src/research/` may carry its own footnote URLs, and answering
 each with a new allowlist line scales badly and dulls the gate. Filed separately.

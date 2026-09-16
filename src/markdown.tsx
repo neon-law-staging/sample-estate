@@ -6,7 +6,7 @@ import type { ReactNode } from 'react'
 /**
  * A renderer for the Markdown this repository actually produces.
  *
- * It is deliberately not a Markdown implementation. `research/convert.py` emits
+ * It is deliberately not a Markdown implementation. `src/research/convert.py` emits
  * a known shape — a heading, a metadata table, the reporter's head matter as a
  * blockquote, then the opinions as headings and paragraphs — and this reads that
  * shape and nothing else. A CommonMark parser would be a dependency, a bundle,

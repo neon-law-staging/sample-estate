@@ -161,7 +161,7 @@ function Matter() {
 /**
  * The research tab: what the statute would do if there were no plan.
  *
- * The table is the index; `research/opinions/` in the repository holds the full
+ * The table is the index; `src/research/opinions/` in the repository holds the full
  * text of each opinion, so a reader who wants the language rather than the
  * summary has somewhere to go. Nothing here links out — an authenticated portal
  * that reaches an outside host is a third party watching a matter, and the CSP
@@ -214,7 +214,7 @@ function Research() {
             Caselaw Access Project JSON beside it.
           </FactCard>
           <FactCard title="Regenerating">
-            <code>python3 research/convert.py</code> rewrites every Markdown file from its JSON.
+            <code>python3 src/research/convert.py</code> rewrites every Markdown file from its JSON.
             Nothing in that folder is edited by hand.
           </FactCard>
           <FactCard title="Not a citator">
@@ -244,7 +244,7 @@ function Opinion({ file, caption }: { file: string; caption: string }) {
     return (
       <Callout tone="warning">
         The text of {caption} is indexed but not in this bundle — `{RESEARCH_FOLDER}
-        {file}.md` is missing. Run <code>python3 research/convert.py</code> to regenerate it from
+        {file}.md` is missing. Run <code>python3 src/research/convert.py</code> to regenerate it from
         the JSON.
       </Callout>
     )
