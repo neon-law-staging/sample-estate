@@ -18,7 +18,7 @@ import type { ReactNode } from 'react'
  * being interpreted. For court prose that is the safer failure — a stray
  * underscore in a citation should not become emphasis.
  *
- * Two shapes here exist because `navigator validate` holds the generated files to
+ * Two shapes here exist because `navigator project gate` holds the generated files to
  * 120 columns. Court paragraphs are wrapped, so consecutive lines are joined back
  * into one paragraph rather than each becoming its own; and `convert.py` escapes
  * what wrapping turns into accidental Markdown — an `at *5` citation, a statute
