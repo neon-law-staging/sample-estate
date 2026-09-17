@@ -14,14 +14,14 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "oxlint",
-    "validate": "navigator validate",
+    "validate": "cd .. && navigator project gate",
     "typecheck": "tsc --noEmit",
     "test": "pnpm build && vitest run",
     "test:watch": "vitest",
     "check": "pnpm lint && pnpm typecheck && pnpm build && pnpm test"
   },
   "dependencies": {
-    "@neon-law-source-code/navigator-ux": "https://github.com/neon-law-source-code/navigator-ux/releases/download/v26.9.16/navigator-ux-v26.9.16.tgz",
+    "@neon-law-source-code/navigator-ux": "https://github.com/neon-law-source-code/navigator-ux/releases/download/v26.9.17/navigator-ux-v26.9.17.tgz",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
