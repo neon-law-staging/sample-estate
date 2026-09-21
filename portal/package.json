@@ -2,7 +2,7 @@
   "name": "sample-estate",
   "version": "0.1.0",
   "description": "A Navigator project application: a client portal for the fixture matter Estate of Cornelius Montgomery.",
-  "license": "AGPL-3.0-only",
+  "license": "Apache-2.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.17.0",
@@ -21,7 +21,7 @@
     "check": "pnpm lint && pnpm typecheck && pnpm build && pnpm test"
   },
   "dependencies": {
-    "@neon-law-source-code/navigator-ux": "https://github.com/neon-law-source-code/navigator-ux/releases/download/v26.9.20/navigator-ux-v26.9.20.tgz",
+    "@neon-law-source-code/navigator-ux": "https://github.com/neon-law-source-code/navigator-ux/releases/download/v26.9.21/navigator-ux-v26.9.21.tgz",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
